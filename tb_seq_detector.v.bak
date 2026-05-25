@@ -1,0 +1,44 @@
+initial begin
+        // --- Initialization ---
+        clk = 0; reset = 1; data_in = 0;
+        #15 reset = 0;
+
+        // ==========================================================
+        // USE CASE 1: Packet Header Detection (Non-Overlapping)
+        // Scenario: Network hardware mein 4-bit header "1101" detect karna.
+        // Data: 1101_1101 (Should detect twice, but separately)
+        // ==========================================================
+        $display("Running UC1: Header Detection...");
+        mode = 0; seq_len = 4; pattern = 16'b1101;
+        // First 1101
+        #10 data_in = 1; #10 data_in = 1; #10 data_in = 0; #10 data_in = 1; 
+        // Second 1101
+        #10 data_in = 1; #10 data_in = 1; #10 data_in = 0; #10 data_in = 1;
+
+        #40 reset = 1; #10 reset = 0; // Clear for next case
+
+        // ==========================================================
+        // USE CASE 2: High-Speed Stream (Overlapping)
+        // Scenario: Continuous data monitoring jahan bits share hotay hain.
+        // Pattern: "101". Data: "10101" (Should detect twice: 101 and 101)
+        // ==========================================================
+        $display("Running UC2: Overlapping Stream...");
+        mode = 1; seq_len = 3; pattern = 16'b101;
+        #10 data_in = 1; #10 data_in = 0; #10 data_in = 1; // 1st detection
+        #10 data_in = 0; #10 data_in = 1;                 // 2nd detection (overlapped)
+
+        #40 reset = 1; #10 reset = 0;
+
+        // ==========================================================
+        // USE CASE 3: Short Control Signal (Dynamic Length)
+        // Scenario: Sirf 2-bit ka trigger signal "11" detect karna.
+        // Logic: Length ko runtime par chota kar dena.
+        // ==========================================================
+        $display("Running UC3: Short Signal Trigger...");
+        mode = 0; seq_len = 2; pattern = 16'b11;
+        #10 data_in = 0; #10 data_in = 1; #10 data_in = 1; // Match!
+        #10 data_in = 0;
+
+        #50 $display("All Use Cases Completed.");
+        $stop;
+    end

@@ -1,0 +1,16 @@
+{D:/CA PROJECT/seq_detector.v} {1 {vlog -work work -stats=none {D:/CA PROJECT/seq_detector.v}
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module seq_detector
+
+Top level modules:
+	seq_detector
+
+} {} {}} {D:/CA PROJECT/tb_seq_detector.v} {1 {vlog -work work -stats=none {D:/CA PROJECT/tb_seq_detector.v}
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module seq_detector
+-- Compiling module tb_seq_detector
+
+Top level modules:
+	tb_seq_detector
+
+} {} {}}
